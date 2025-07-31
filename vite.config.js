@@ -1,3 +1,4 @@
+// vite.config.ts
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
@@ -21,9 +22,6 @@ export default defineConfig({
             if (id.includes('react') || id.includes('react-dom')) {
               return 'vendor-react';
             }
-            if (id.includes('lucide-react')) {
-              return 'vendor-lucide';
-            }
             return 'vendor';
           }
         },
@@ -33,8 +31,7 @@ export default defineConfig({
   optimizeDeps: {
     include: [
       'react',
-      'react-dom',
-      'lucide-react'
+      'react-dom'
     ],
   },
 });
