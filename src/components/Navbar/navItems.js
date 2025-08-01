@@ -3,7 +3,6 @@ export const navItems = [
   "Disciplinas",
   "Horario",
   "Instructores",
-  "Testimonios",
   "Galería",
   "Reservar",
   "Contacto",

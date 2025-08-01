@@ -1,4 +1,4 @@
-import heroBackground from '../../assets/images/hero-background.jpg';
+import heroBackground from '../../assets/images/hero-background.webp'; 
 
 export default function HeroBackground() {
   return (
