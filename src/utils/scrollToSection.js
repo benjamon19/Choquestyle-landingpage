@@ -34,7 +34,7 @@ export const scrollToSection = (id) => {
     } else if (screenWidth < 1024) {
       baseOffset = -15; // 📱 TABLET: espacio medio
     } else {
-      baseOffset = 40; // 💻 DESKTOP: más espacio
+      baseOffset = -15; // 💻 DESKTOP: más espacio
     }
     
     // Ajuste inteligente basado en la altura de pantalla

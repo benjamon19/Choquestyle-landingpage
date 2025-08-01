@@ -1,5 +1,5 @@
 import { scrollToSection } from "../../utils/scrollToSection";
-import heroData from './heroData'; // Importación ES Modules
+import heroData from './heroData'; 
 
 export default function HeroContent({ animationStates }) {
   const { title, subtitle, text } = animationStates;

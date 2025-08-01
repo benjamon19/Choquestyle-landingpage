@@ -4,7 +4,7 @@ export default function Logo() {
   if (!logo) return null;
   
   return (
-    <div className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full overflow-hidden transition-all duration-300">
+    <div className="w-12 h-12 md:w-13 md:h-13 flex items-center justify-center rounded-full overflow-hidden transition-all duration-300">
       <img
         src={logo}
         alt="Logo ChoquStyle"

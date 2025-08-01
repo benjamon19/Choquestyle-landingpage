@@ -4,6 +4,7 @@ import HeroBanner from "./sections/HeroSection/HeroBanner";
 
 // Carga diferida de secciones
 const DisciplinesSection = lazy(() => import('./sections/DisciplinesSection/DisciplinesSection'));
+const ScheduleSection = lazy(() => import('./sections/ScheduleSection/ScheduleSection'));
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <NavigationBar />
       <HeroBanner />
       <DisciplinesSection />
+      <ScheduleSection />
     </>
   );
 }
