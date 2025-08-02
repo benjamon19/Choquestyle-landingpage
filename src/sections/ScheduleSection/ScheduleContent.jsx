@@ -1,4 +1,3 @@
-// ScheduleContent.jsx
 import React from 'react';
 import ScheduleTable from './ScheduleTable';
 
@@ -21,7 +20,8 @@ const ScheduleContent = () => {
       
       <div className="mt-8 text-center">
         <p className="text-gray-300 text-sm">
-          * Los horarios pueden estar sujetos a cambios. Consulta siempre con recepción.
+          * Los horarios pueden estar sujetos a cambios. Consulta siempre con recepción | 
+          Las clases de Jhonatan se pagan por sesión, las clases de Daniel se pagan por mensualidad.
         </p>
       </div>
     </div>

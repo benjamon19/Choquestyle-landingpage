@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+.bg-hero {
+  background-image: url('/assets/images/hero-background.webp'), url('/assets/images/hero-background.jpg');
+  background-size: cover;
+  background-position: center center;
+}
+
+@media (max-width: 639px) {
+  .bg-hero {
+    background-position: 86% center !important;
+  }
+}
