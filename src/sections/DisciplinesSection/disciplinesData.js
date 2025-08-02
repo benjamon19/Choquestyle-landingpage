@@ -28,5 +28,5 @@ export const disciplines = [
 
 export const sectionContent = {
   title: "NUESTRAS DISCIPLINAS",
-  description: "Entrena con los mejores en las artes marciales y deportes de combate más exigentes. Cada disciplina está diseñada para desarrollar fuerza, técnica, resistencia y mentalidad de campeón."
-};
+  description: "Desarrolla fuerza, técnica y mentalidad de campeón en las mejores disciplinas de combate."
+}

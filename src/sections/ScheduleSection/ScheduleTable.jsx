@@ -18,37 +18,42 @@ const ScheduleTable = () => {
     const cellKey = `${dayKey}-${rowIndex}`;
     const isActive = activeCell === cellKey;
 
-    let mainText = "";
-    let subText = "";
+    let mainText = '';
+    let subText = '';
 
     if (hasContent) {
-      const parts = content.split(" (");
+      const parts = content.split(' (');
       mainText = parts[0];
-      subText = parts[1]?.replace(")", "");
+      subText = parts[1]?.replace(')', '');
     }
-
+    
     return (
       <div
         key={cellKey}
-        className={getCellClasses(hasContent, dayKey, rowIndex)}
+        className={`
+          ${getCellClasses(hasContent, dayKey, rowIndex)} 
+          min-h-[36px] sm:min-h-[64px] 
+          px-2 sm:px-4 
+          flex items-center justify-center
+        `}
         onMouseEnter={hasContent ? () => handleCellEnter(dayKey, rowIndex) : undefined}
         onMouseLeave={hasContent ? handleCellLeave : undefined}
         onTouchStart={hasContent ? () => handleMobileClick(dayKey, rowIndex) : undefined}
         style={{ cursor: 'default' }}
       >
         {hasContent && (
-          <div className="block text-center transition-colors duration-150">
+          <div className="text-center leading-tight">
             <span
               style={{
                 color: isActive ? '#000' : '#fff',
-                fontWeight: 'bold'
+                fontWeight: 600,
               }}
-              className="block text-sm sm:text-xs md:text-sm whitespace-nowrap"
+              className="block text-[10px] sm:text-xs md:text-sm whitespace-nowrap"
             >
               {mainText}
             </span>
             {subText && (
-              <span className="block text-xs text-gray-400 mt-0.5">
+              <span className="block text-[9px] text-gray-400 mt-0.5">
                 {subText}
               </span>
             )}
@@ -64,10 +69,9 @@ const ScheduleTable = () => {
       <div className="overflow-x-auto">
         {/* Contenedor de la tabla */}
         <div className="min-w-[800px] rounded-xl overflow-hidden shadow-2xl border border-[#454445]">
-          
           {/* Header */}
           <div className="grid grid-cols-7 gap-0 text-sm">
-            <div 
+            <div
               className="bg-[#FFD600] text-black font-bold text-center py-3 px-2 border-r border-[#454445] sm:py-4 sm:px-4"
               style={{ cursor: 'default' }}
             >
@@ -89,8 +93,8 @@ const ScheduleTable = () => {
             <div
               key={rowIndex}
               className={`grid grid-cols-7 gap-0 ${
-                rowIndex === 3 
-                  ? 'border-t-2 border-t-[#FFD600]' 
+                rowIndex === 3
+                  ? 'border-t-2 border-t-[#FFD600]'
                   : 'border-t border-[#454445]'
               }`}
             >

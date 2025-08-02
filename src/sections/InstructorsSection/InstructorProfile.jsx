@@ -16,6 +16,12 @@ const imageMap = {
   },
 };
 
+// Descripciones de los instructores
+const instructorDescriptions = {
+  "Daniel Choque": "Campeón con 14 títulos nacionales e internacionales. Especialista en kickboxing y muay thai con experiencia en Brasil, Chile y Argentina.",
+  "Jhonatan Leuch": "Peleador profesional y cinturón negro especializado en clases personalizadas de MMA, Boxeo y K1. Campeón con 5 títulos profesionales entre Brasil y Chile."
+};
+
 const InstructorProfile = ({ instructor }) => {
   const [showAchievements, setShowAchievements] = useState(false);
   const imageSrc = imageMap[instructor.name];
@@ -70,13 +76,8 @@ const InstructorProfile = ({ instructor }) => {
 
         {instructor.achievements && (
           <div className="space-y-4">
-            <p
-              className="text-sm sm:text-base leading-relaxed"
-              style={{ color: "#BBBBBB" }} // Gris claro para descripción
-            >
-              {instructor.name === "Daniel Choque"
-                ? `Campeón con 14 títulos nacionales e internacionales. Especialista en kickboxing y muay thai con experiencia en Brasil, Chile y Argentina.`
-                : `Peleador profesional y cinturón negro especializado en clases personalizadas de MMA, Boxeo y K1. Campeón con 5 títulos profesionales entre Brasil y Chile.`}
+            <p className="text-sm sm:text-base leading-relaxed text-gray-300">
+              {instructorDescriptions[instructor.name]}
             </p>
 
             {/* Texto clickeable */}
