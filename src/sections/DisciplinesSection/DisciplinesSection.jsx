@@ -9,7 +9,7 @@ export default function DisciplinesSection() {
   return (
     <section 
       className="py-20 bg-gray-900 w-full"
-      style={{ backgroundColor: '#121212' }}
+      style={{ backgroundColor: '#1c1c1c' }}
       id="disciplinas"
     >
       <style>

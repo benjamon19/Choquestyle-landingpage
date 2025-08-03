@@ -7,8 +7,8 @@ import { scrollToSection } from "../../utils/scrollToSection";
 export default function NavigationBar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleNavClick = (item) => {
-    scrollToSection(item.toLowerCase());
+  const handleNavClick = (id) => {
+    scrollToSection(id);
     setMenuOpen(false);
   };
 
@@ -35,11 +35,11 @@ export default function NavigationBar() {
         <div className="hidden lg:flex lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2 space-x-4 xl:space-x-6">
           {navItems.map((item) => (
             <button
-              key={item}
-              onClick={() => handleNavClick(item)}
+              key={item.id}                     
+              onClick={() => handleNavClick(item.id)}
               className="cursor-pointer hover:text-yellow-400 hover:scale-105 transition-all duration-300 font-medium text-sm xl:text-base uppercase tracking-wide whitespace-nowrap px-1 py-0.5"
             >
-              {item}
+              {item.label}                    
             </button>
           ))}
         </div>
@@ -52,13 +52,13 @@ export default function NavigationBar() {
         } bg-gradient-to-b from-black/50 via-black/40 to-black/30 backdrop-blur-lg border-t border-yellow-400/20`}
       >
         <div className="px-6 py-4 space-y-2">
-          {navItems.map((item, index) => (
+          {navItems.map((item) => (
             <button
-              key={item}
-              onClick={() => handleNavClick(item)}
+              key={item.id}
+              onClick={() => handleNavClick(item.id)}
               className="block w-full text-left font-medium uppercase tracking-wide cursor-pointer hover:text-yellow-400 hover:translate-x-2 transition-all duration-300 py-1 px-2 rounded-md hover:bg-yellow-400/10 border-l-2 border-transparent hover:border-yellow-400"
             >
-              {item}
+              {item.label}
             </button>
           ))}
         </div>

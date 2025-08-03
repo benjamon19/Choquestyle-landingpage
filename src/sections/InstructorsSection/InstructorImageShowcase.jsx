@@ -4,9 +4,18 @@ import { instructors } from "./instructorsData";
 
 const InstructorImageShowcase = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef(null);
 
   useEffect(() => {
+    // Detectar si es móvil
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -20,7 +29,10 @@ const InstructorImageShowcase = () => {
       observer.observe(sectionRef.current);
     }
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
   return (
@@ -51,7 +63,7 @@ const InstructorImageShowcase = () => {
                   : "opacity-0 translate-y-24"
               }`}
               style={{
-                transitionDelay: `${index * 200}ms`,
+                transitionDelay: `${index * (isMobile ? 600 : 200)}ms`,
                 backgroundColor: "#121212",
               }}
             >
