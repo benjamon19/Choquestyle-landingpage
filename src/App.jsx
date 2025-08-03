@@ -7,6 +7,7 @@ const DisciplinesSection = lazy(() => import('./sections/DisciplinesSection/Disc
 const InstructorsSection = lazy(() => import('./sections/InstructorsSection/InstructorsSection'));
 const ScheduleSection = lazy(() => import('./sections/ScheduleSection/ScheduleSection'));
 const GallerySection = lazy(() => import('./sections/GallerySection/GallerySection'));
+const ReservationSection = lazy(() => import('./sections/ReservationSection/ReservationSection'));
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <InstructorsSection />
         <ScheduleSection />
         <GallerySection />
+        <ReservationSection />
     </>
   );
 }
