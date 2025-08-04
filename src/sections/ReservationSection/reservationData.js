@@ -52,6 +52,6 @@ export const texts = {
     hide: "Ocultar reglas"
   },
   rulesTitle: "Reglas para la Clase de Prueba",
-  buttonText: "¿A qué esperas",
+  buttonText: "¿A qué esperas?",
   buttonSubtext: "Al hacer clic serás redirigido a nuestro sistema de reservas"
 };
