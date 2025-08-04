@@ -13,8 +13,7 @@ export const footerData = {
   ],
   
   copyright: {
-    year: "2023",
-    brand: "ChoqueStyle",
+    brand: "Choquestyle",
     text: "Todos los derechos reservados",
     location: "Calama, Chile"
   }
