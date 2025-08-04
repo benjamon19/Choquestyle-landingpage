@@ -1,11 +1,10 @@
 import React from 'react';
 import { FaMapMarkerAlt, FaWhatsapp, FaInstagram, FaClock } from 'react-icons/fa';
+import { IoMdMail } from 'react-icons/io'; 
 
 const ContactInfo = ({ contactInfo, schedule }) => {
   return (
-    <div
-      className="min-h-[300px] flex flex-col justify-center sm:justify-start"
-    >
+    <div className="min-h-[300px] flex flex-col justify-center sm:justify-start">
       <div className="space-y-8 text-center sm:text-left">
         {/* Información de Contacto */}
         <div>
@@ -44,6 +43,11 @@ const ContactInfo = ({ contactInfo, schedule }) => {
               >
                 {contactInfo.instagram.text}
               </a>
+            </div>
+
+            <div className="flex justify-center sm:justify-start items-center space-x-2">
+              <IoMdMail className="text-yellow-400 text-lg flex-shrink-0" />
+              <span className="text-white text-base">{contactInfo.email.text}</span>
             </div>
           </div>
         </div>

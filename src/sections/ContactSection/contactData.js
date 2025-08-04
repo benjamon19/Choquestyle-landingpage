@@ -12,6 +12,9 @@ export const contactData = {
     instagram: {
       text: "@choquestyle2.0 en Instagram",
       url: "https://www.instagram.com/choquestyle2.0"
+    },
+    email: {
+      text: "daniel.choque@choquestyle.cl" 
     }
   },
   
