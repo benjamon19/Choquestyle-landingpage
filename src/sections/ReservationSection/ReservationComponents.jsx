@@ -7,7 +7,6 @@ export const ReservationTitle = ({ title }) => (
     className="text-4xl md:text-5xl uppercase leading-tight mb-6 font-bold tracking-wide"
     style={{
       fontFamily: "'Anton SC', 'Impact', 'Arial Black', sans-serif",
-      letterSpacing: '0.05em',
       color: '#FFD600',
     }}
   >
@@ -85,12 +84,12 @@ export const RulesSection = ({ showRules, rules, rulesTitle }) => (
 );
 
 // Componente para el botón principal
-export const ReservationButton = ({ onReservation, buttonText, buttonSubtext }) => (
+export const ReservationButton = ({ onReservation, buttonText, buttonSubtext, defaultKey }) => (
   <div>
     <button
       onClick={onReservation}
-      className="w-full bg-[#FFD600] text-black px-4 py-3 sm:px-6 sm:py-3 md:px-8 md:py-4 rounded-md font-bold text-sm sm:text-base md:text-lg uppercase tracking-wide 
-        transition-all duration-300 transform cursor-pointer shadow-lg
+      className="w-full bg-[#FFD600] text-black px-4 py-3 sm:px-6 sm:py-3 md:px-8 md:py-4 rounded-md font-bold text-sm sm:text-base md:text-lg uppercase tracking-wide
+         transition-all duration-300 transform cursor-pointer shadow-lg
         hover:bg-[#ffeb3b] hover:scale-105 hover:shadow-xl
         active:bg-[#ffeb3b] active:scale-105 active:shadow-xl
         focus:bg-[#ffeb3b] focus:scale-105 focus:shadow-xl"
@@ -102,6 +101,9 @@ export const ReservationButton = ({ onReservation, buttonText, buttonSubtext }) 
     </button>
     <p className="text-gray-300 text-xs mt-4">
       {buttonSubtext}
+    </p>
+    <p className="text-gray-300 text-xs mt-2">
+      {defaultKey}
     </p>
   </div>
 );

@@ -53,5 +53,6 @@ export const texts = {
   },
   rulesTitle: "Reglas para la Clase de Prueba",
   buttonText: "¿A qué esperas?",
-  buttonSubtext: "Al hacer clic serás redirigido a nuestro sistema de reservas"
+  buttonSubtext: "Al hacer clic serás redirigido al sistema de reservas.",
+  defaultKey: "La clave por defecto es: choquestyle"
 };

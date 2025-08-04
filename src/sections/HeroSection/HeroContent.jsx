@@ -13,7 +13,6 @@ export default function HeroContent({ animationStates }) {
         }`}
         style={{
           fontFamily: "'Anton SC', 'Impact', 'Arial Black', sans-serif",
-          letterSpacing: '0.05em'
         }}
       >
         {mainTitle}
@@ -25,7 +24,6 @@ export default function HeroContent({ animationStates }) {
         }`}
         style={{
           fontFamily: "'Anton SC', 'Impact', 'Arial Black', sans-serif",
-          letterSpacing: '0.05em'
         }}
       >
         {subTitle}

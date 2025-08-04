@@ -47,7 +47,6 @@ const GallerySection = () => {
           className="text-4xl md:text-5xl uppercase leading-tight mb-6 font-bold tracking-wide"
           style={{
             fontFamily: "'Anton SC', 'Impact', 'Arial Black', sans-serif",
-            letterSpacing: '0.05em',
             color: '#FFD600',
           }}
         >

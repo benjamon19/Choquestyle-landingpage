@@ -45,8 +45,6 @@ const InstructorImageShowcase = () => {
           className="text-4xl md:text-5xl uppercase leading-tight text-center mb-16 font-bold"
           style={{
             fontFamily: "'Anton SC', 'Impact', 'Arial Black', sans-serif",
-            letterSpacing: "0.05em",
-            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
             color: "#FFD600",
           }}
         >

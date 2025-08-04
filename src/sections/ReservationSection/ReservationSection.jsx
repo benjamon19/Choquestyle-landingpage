@@ -61,6 +61,7 @@ const ReservationSection = () => {
             onReservation={handleReservation}
             buttonText={texts.buttonText}
             buttonSubtext={texts.buttonSubtext}
+            defaultKey={texts.defaultKey}
           />
         </div>
       </div>
