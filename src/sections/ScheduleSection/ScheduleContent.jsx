@@ -8,7 +8,7 @@ const ScheduleContent = () => {
         <h2 
           className="text-4xl md:text-5xl text-[#FFD600] uppercase leading-tight text-center mb-6 font-bold"
           style={{ 
-            fontFamily: "'Impact', 'Arial Black', 'Bebas Neue', sans-serif", 
+            fontFamily: "'Anton SC', 'Impact', 'Arial Black', sans-serif",
             letterSpacing: '0.05em'
           }}
         >

@@ -58,7 +58,7 @@ const InstructorProfile = ({ instructor }) => {
         <h3
           className="text-3xl sm:text-4xl md:text-5xl font-bold"
           style={{
-            fontFamily: "'Impact', 'Arial Black', 'Bebas Neue', sans-serif",
+            fontFamily: "'Anton SC', 'Impact', 'Arial Black', sans-serif",
             color: "#FFFFFF",
           }}
         >
@@ -68,7 +68,8 @@ const InstructorProfile = ({ instructor }) => {
         <p
           className="text-lg sm:text-xl md:text-2xl font-bold uppercase tracking-wide"
           style={{
-            fontFamily: "'Impact', 'Arial Black', sans-serif",
+            fontFamily: "'Anton SC', 'Impact', 'Arial Black', sans-serif",
+            letterSpacing: '0.05em',
             color: "#FFD600",
           }}
         >

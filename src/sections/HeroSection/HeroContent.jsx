@@ -8,24 +8,24 @@ export default function HeroContent({ animationStates }) {
   return (
     <div className="flex flex-col items-center justify-center text-center min-h-[80vh] max-w-3xl mx-auto">
       <h1 
-        className={`text-6xl sm:text-6xl md:text-7xl lg:text-8xl text-[#FFD600] uppercase leading-tight mb-2 font-black transition-all duration-800 ease-out transform ${
+        className={`text-6xl sm:text-6xl md:text-7xl lg:text-8xl text-[#FFD600] uppercase leading-tight mb-2 transition-all duration-800 ease-out transform ${
           title ? 'scale-100 opacity-100' : 'scale-70 opacity-0'
         }`}
-        style={{ 
-          fontFamily: "'Impact', 'Arial Black', 'Bebas Neue', sans-serif", 
-          letterSpacing: '0.01em'
+        style={{
+          fontFamily: "'Anton SC', 'Impact', 'Arial Black', sans-serif",
+          letterSpacing: '0.05em'
         }}
       >
         {mainTitle}
-      </h1>
+      </h1> 
 
       <h2 
-        className={`text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-[#FFD600] uppercase mb-6 font-black transition-all duration-1000 ease-out transform ${
+        className={`text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-[#FFD600] uppercase mb-6 transition-all duration-1000 ease-out transform ${
           subtitle ? 'scale-100 opacity-100' : 'scale-75 opacity-0'
         }`}
-        style={{ 
-          fontFamily: "'Impact', 'Arial Black', 'Bebas Neue', sans-serif", 
-          letterSpacing: '0.01em'
+        style={{
+          fontFamily: "'Anton SC', 'Impact', 'Arial Black', sans-serif",
+          letterSpacing: '0.05em'
         }}
       >
         {subTitle}

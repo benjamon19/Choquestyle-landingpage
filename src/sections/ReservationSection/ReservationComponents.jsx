@@ -6,8 +6,8 @@ export const ReservationTitle = ({ title }) => (
   <h2
     className="text-4xl md:text-5xl uppercase leading-tight mb-6 font-bold tracking-wide"
     style={{
-      fontFamily: "'Impact', 'Arial Black', sans-serif",
-      textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+      fontFamily: "'Anton SC', 'Impact', 'Arial Black', sans-serif",
+      letterSpacing: '0.05em',
       color: '#FFD600',
     }}
   >
