@@ -2,8 +2,10 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import path from 'path';
 
 export default defineConfig({
+  base: '/', // Producción en dominio raíz (choquestyle.cl)
   plugins: [
     react({
       jsxImportSource: '@emotion/react',
@@ -11,9 +13,17 @@ export default defineConfig({
         plugins: ['@emotion/babel-plugin'],
       },
     }),
-    tailwindcss()
+    tailwindcss(),
   ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'), // para usar @/components
+    },
+  },
   build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+    sourcemap: false, // desactiva .map 
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
@@ -29,9 +39,6 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: [
-      'react',
-      'react-dom'
-    ],
+    include: ['react', 'react-dom'],
   },
 });
