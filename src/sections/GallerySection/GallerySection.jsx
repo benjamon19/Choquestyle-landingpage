@@ -10,7 +10,6 @@ const GallerySection = () => {
   const sectionRef = useRef(null);
 
   useEffect(() => {
-    // Detectar si es móvil
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
@@ -77,7 +76,7 @@ const GallerySection = () => {
                 <img 
                   src={gallery.image} 
                   alt={gallery.title} 
-                  onError={(e) => e.currentTarget.src = gallery.fallback} // Fallback si falla el webp
+                  onError={(e) => e.currentTarget.src = gallery.fallback}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 cursor-pointer"
                 />
               </div>
@@ -85,7 +84,6 @@ const GallerySection = () => {
           ))}
         </div>
       </div>
-
       {selectedGallery && (
         <ImageLightbox
           image={selectedGallery.image}

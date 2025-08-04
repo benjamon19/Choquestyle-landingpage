@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
+// Importa tus imágenes
 import danielChoqueImgWebp from "../../assets/images/couch1.webp";
 import danielChoqueImgJpeg from "../../assets/images/couch1.jpeg";
 import jhonatanLeuchImgWebp from "../../assets/images/couch2.webp";
@@ -16,7 +18,6 @@ const imageMap = {
   },
 };
 
-// Descripciones de los instructores
 const instructorDescriptions = {
   "Daniel Choque": "Campeón con 14 títulos nacionales e internacionales. Especialista en kickboxing y muay thai con experiencia en Brasil, Chile y Argentina.",
   "Jhonatan Leuch": "Peleador profesional y cinturón negro especializado en clases personalizadas de MMA, Boxeo y K1. Campeón con 5 títulos profesionales entre Brasil y Chile."
@@ -58,7 +59,7 @@ const InstructorProfile = ({ instructor }) => {
           className="text-3xl sm:text-4xl md:text-5xl font-bold"
           style={{
             fontFamily: "'Impact', 'Arial Black', 'Bebas Neue', sans-serif",
-            color: "#FFFFFF", // Blanco brillante
+            color: "#FFFFFF",
           }}
         >
           {instructor.name}
@@ -68,7 +69,7 @@ const InstructorProfile = ({ instructor }) => {
           className="text-lg sm:text-xl md:text-2xl font-bold uppercase tracking-wide"
           style={{
             fontFamily: "'Impact', 'Arial Black', sans-serif",
-            color: "#FFD600", // Amarillo para el título
+            color: "#FFD600",
           }}
         >
           {instructor.title}
@@ -80,19 +81,18 @@ const InstructorProfile = ({ instructor }) => {
               {instructorDescriptions[instructor.name]}
             </p>
 
-            {/* Texto clickeable */}
-            <div
+            {/* Solo este elemento fue modificado */}
+            <button
               onClick={() => setShowAchievements(!showAchievements)}
-              className="cursor-pointer group transition-all duration-300 w-fit mx-auto"
+              className="flex items-center justify-center mx-auto text-[#FFD600] hover:text-white transition-colors duration-300 text-sm font-medium cursor-pointer"
             >
-              <h4
-                className="text-sm sm:text-base font-semibold group-hover:opacity-80 transition-opacity duration-300"
-                style={{ color: "#FFD600" }}
-              >
+              <span className="underline">
                 {showAchievements ? "Ocultar logros" : "Ver logros completos"}
-              </h4>
-              <div className="h-0.5 w-28 mx-auto mt-0.5 bg-[#FFD600]"></div>
-            </div>
+              </span>
+              <span className="ml-2">
+                {showAchievements ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}
+              </span>
+            </button>
 
             {/* Caja de logros */}
             <div
@@ -100,10 +100,7 @@ const InstructorProfile = ({ instructor }) => {
                 showAchievements ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
               }`}
             >
-              <div
-                className="mt-3 mx-auto max-w-xs rounded-md bg-[#121212] px-3 py-2 space-y-2 overflow-y-auto max-h-40
-                scrollbar-thin scrollbar-thumb-neutral-700 scrollbar-track-transparent"
-              >
+              <div className="mt-3 mx-auto max-w-xs rounded-md bg-[#121212] px-3 py-2 space-y-2 overflow-y-auto max-h-40 scrollbar-thin scrollbar-thumb-neutral-700 scrollbar-track-transparent">
                 {instructor.achievements.map((achievement, idx) => (
                   <div
                     key={idx}

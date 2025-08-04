@@ -89,7 +89,11 @@ export const ReservationButton = ({ onReservation, buttonText, buttonSubtext }) 
   <div>
     <button
       onClick={onReservation}
-      className="w-full bg-[#FFD600] hover:bg-[#ffeb3b] text-black px-4 py-3 sm:px-6 sm:py-3 md:px-8 md:py-4 rounded-md text-sm sm:text-base md:text-lg uppercase tracking-wide transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl active:scale-95 cursor-pointer"
+      className="w-full bg-[#FFD600] text-black px-4 py-3 sm:px-6 sm:py-3 md:px-8 md:py-4 rounded-md text-sm sm:text-base md:text-lg uppercase tracking-wide 
+        transition-all duration-300 transform cursor-pointer shadow-lg
+        hover:bg-[#ffeb3b] hover:scale-105 hover:shadow-xl
+        active:bg-[#ffeb3b] active:scale-105 active:shadow-xl
+        focus:bg-[#ffeb3b] focus:scale-105 focus:shadow-xl"
       style={{
         fontFamily: "'Impact', 'Arial Black', sans-serif",
       }}
