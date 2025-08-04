@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 
 export default defineConfig({
-  base: '/', // Producción en dominio raíz (choquestyle.cl)
+  base: '/',
   plugins: [
     react({
       jsxImportSource: '@emotion/react',
@@ -17,26 +17,14 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'), // para usar @/components
+      '@': path.resolve(__dirname, 'src'),
     },
   },
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    sourcemap: false, // desactiva .map 
+    sourcemap: false,
     chunkSizeWarningLimit: 1000,
-    rollupOptions: {
-      output: {
-        manualChunks: (id) => {
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom')) {
-              return 'vendor-react';
-            }
-            return 'vendor';
-          }
-        },
-      },
-    },
   },
   optimizeDeps: {
     include: ['react', 'react-dom'],
