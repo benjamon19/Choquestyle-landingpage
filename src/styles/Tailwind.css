@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+:root {
+  --font-display: 'Bebas Neue', 'Impact', 'Arial Narrow', sans-serif;
+  --font-heading: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --color-brand: #FFD600;
+  --color-bg: #0a0a0a;
+  --color-bg-2: #111111;
+  --color-bg-3: #181818;
+  /* Viewport-fit: padding y márgenes escalan con la altura de pantalla */
+  --sec-py: clamp(1rem, 4vh, 5.5rem);
+  --sec-header-mb: clamp(0.75rem, 2.5vh, 3.5rem);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  background-color: var(--color-bg);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Hide main scrollbar */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  -webkit-font-smoothing: antialiased;
+}
+
+
+button {
+  cursor: pointer;
+}
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: var(--color-brand); border-radius: 2px; }
+
+[data-sec-num]::before {
+  content: attr(data-sec-num);
+  font-family: var(--font-display);
+  color: rgba(255, 214, 0, 0.035);
+  font-size: clamp(8rem, 20vw, 22rem);
+  line-height: 1;
+  position: absolute;
+  top: -0.05em;
+  right: -0.03em;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.03em;
+  z-index: 0;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse 40s linear infinite;
+  will-change: transform;
+}
+
+
+/* Custom horizontal scrollbar for the table */
+.custom-horizontal-scrollbar::-webkit-scrollbar {
+  height: 6px !important;
+  display: block !important;
+}
+.custom-horizontal-scrollbar::-webkit-scrollbar-track {
+  background: #111 !important;
+  border-radius: 3px;
+}
+.custom-horizontal-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-brand) !important;
+  border-radius: 3px;
+}
+.custom-horizontal-scrollbar {
+  -ms-overflow-style: auto !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--color-brand) #111 !important;
+}
+
+/* Reset any shadow, border, filter, or custom CSS for .ico class and .ico files */
+.ico, img[src$=".ico"] {
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+  border: none !important;
+  outline: none !important;
+}
+
+
