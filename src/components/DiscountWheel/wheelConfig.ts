@@ -34,7 +34,7 @@ export interface WheelUser {
  * - false: Desactivada temporalmente en la web normal (solo visible con ?jackpot)
  * - true: Activada para todos los visitantes
  */
-export const IS_WHEEL_ENABLED_GLOBALLY: boolean = false;
+export const IS_WHEEL_ENABLED_GLOBALLY: boolean = true;
 
 /**
  * URL de la Google Sheets Web App (Apps Script desplegado).
@@ -45,7 +45,7 @@ export const GOOGLE_SHEETS_API_URL: string =
   'https://script.google.com/macros/s/AKfycbxasz1PXViDPlK2BIPPMACh0Ot1L2aEhzUNjSVUWBC0mFEnOPF8Ri0OrTtCwkRavLHP/exec';
 
 // ─────────────────────────────────────────────────────────────
-// CONFIGURACIÓN DE SECTORES — EDITAR AQUÍ
+// CONFIGURACIÓN DE SECTORES
 // ─────────────────────────────────────────────────────────────
 /**
  * 6 Sectores de 60° cada uno:

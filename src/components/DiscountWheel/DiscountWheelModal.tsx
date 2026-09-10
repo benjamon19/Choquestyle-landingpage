@@ -302,7 +302,7 @@ export default function DiscountWheelModal() {
   };
 
   // ─────────────────────────────────────────────────────────────
-  // 1. GIRO DE LA RULETA
+  // CONTROL DE GIRO Y ROTACIÓN DE LA RULETA
   // ─────────────────────────────────────────────────────────────
   const handleSpin = () => {
     // Desbloquear audio síncronamente en iOS Safari / iPhone y Android
@@ -381,7 +381,7 @@ export default function DiscountWheelModal() {
   };
 
   // ─────────────────────────────────────────────────────────────
-  // 2. ENVÍO DEL FORMULARIO — SIN CÓDIGOS
+  // REGISTRO Y PERSISTENCIA DE PARTICIPACIÓN
   // ─────────────────────────────────────────────────────────────
   const handleClaimSubmit = (e: React.FormEvent) => {
     e.preventDefault();
