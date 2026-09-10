@@ -29,20 +29,9 @@ export interface WheelUser {
   status?: 'Pendiente' | 'Canjeado';
 }
 
-// ─────────────────────────────────────────────────────────────
-// CONFIGURACIÓN DE ACCESO ADMINISTRATIVO Y NUBE
-// ─────────────────────────────────────────────────────────────
-
-/** Ruta o hash secreto para abrir el panel de control */
-export const ADMIN_SECRET_ROUTE = 'ganadores-ruleta-choque2025';
-
-/** PIN de acceso al panel administrativo */
-export const ADMIN_DEFAULT_PIN = 'choque2025';
-
 /**
  * URL de la Google Sheets Web App (Apps Script desplegado).
  * Puede configurarse aquí directamente o mediante VITE_GOOGLE_SHEETS_URL en .env.
- * Si está vacía, el sistema funciona de inmediato guardando localmente.
  */
 export const GOOGLE_SHEETS_API_URL: string =
   (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GOOGLE_SHEETS_URL) ||
@@ -515,97 +504,7 @@ export async function submitWinnerToCloud(user: WheelUser): Promise<boolean> {
   }
 }
 
-/**
- * Obtiene la lista de ganadores desde Google Sheets (o fallback local).
- */
-export async function fetchWinnersFromCloud(): Promise<WheelUser[]> {
-  const url = getGoogleSheetsUrl();
-  const localList = getLocalWinnersList();
 
-  if (!url) {
-    return localList;
-  }
-
-  try {
-    const res = await fetch(`${url}?action=getWinners&t=${Date.now()}`, {
-      method: 'GET',
-    });
-
-    if (res.ok) {
-      const json = await res.json();
-      if (Array.isArray(json?.data)) {
-        const cloudWinners: WheelUser[] = json.data.map((item: any, idx: number) => ({
-          id: item.id || `cloud-${idx}`,
-          date: item.date || '',
-          name: item.name || '',
-          rut: item.rut || '',
-          email: item.email || '',
-          discount: item.discount || '',
-          status: (item.status === 'Canjeado' ? 'Canjeado' : 'Pendiente') as 'Pendiente' | 'Canjeado',
-        }));
-
-        // Combinar con los locales (evitando duplicados por RUT o email)
-        const mergedMap = new Map<string, WheelUser>();
-        for (const w of cloudWinners) {
-          const key = cleanRut(w.rut) || w.email.toLowerCase();
-          if (key) mergedMap.set(key, w);
-        }
-        for (const w of localList) {
-          const key = cleanRut(w.rut) || w.email.toLowerCase();
-          if (key && !mergedMap.has(key)) {
-            mergedMap.set(key, w);
-          }
-        }
-
-        const combined = Array.from(mergedMap.values());
-        saveLocalWinnersList(combined);
-        return combined;
-      }
-    }
-  } catch (err) {
-    console.warn('[Wheel] Error consultando Google Sheets, usando lista local:', err);
-  }
-
-  return localList;
-}
-
-/**
- * Actualiza el estado de un ganador (Pendiente / Canjeado) localmente y en Google Sheets
- */
-export async function updateWinnerStatus(
-  rutOrEmail: string,
-  newStatus: 'Pendiente' | 'Canjeado'
-): Promise<void> {
-  const cleanKey = cleanRut(rutOrEmail) || rutOrEmail.trim().toLowerCase();
-
-  // 1. Actualizar localmente
-  const list = getLocalWinnersList();
-  const index = list.findIndex(
-    w => cleanRut(w.rut) === cleanKey || w.email.toLowerCase() === cleanKey
-  );
-
-  if (index >= 0) {
-    list[index].status = newStatus;
-    saveLocalWinnersList(list);
-  }
-
-  // 2. Intentar actualizar en Google Sheets si está configurado
-  const url = getGoogleSheetsUrl();
-  if (url) {
-    try {
-      await fetch(url, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({
-          action: 'updateStatus',
-          rut: rutOrEmail,
-          status: newStatus,
-        }),
-      });
-    } catch {}
-  }
-}
 
 // ─────────────────────────────────────────────────────────────
 // SONIDO Y EFECTOS
