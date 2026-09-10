@@ -107,23 +107,13 @@ export const SECTOR_ANGLE = 360 / TOTAL_SECTORS; // 60°
 // ─────────────────────────────────────────────────────────────
 
 /**
-/**
  * Detecta si la URL está en modo demostración/grabación de video.
- * Ej: ?jackpot50, ?prueba50, ?win50, ?demo50, ?jackpot40, etc.
+ * Se activa únicamente con el parámetro ?jackpot (ej. ?jackpot, ?jackpot50, ?jackpot40)
  */
 export function isDemoMode(): boolean {
   if (typeof window === 'undefined') return false;
   const url = (window.location.search + window.location.hash).toLowerCase();
-  return (
-    url.includes('jackpot') ||
-    url.includes('prueba') ||
-    url.includes('demo') ||
-    url.includes('win50') ||
-    url.includes('win40') ||
-    url.includes('50off') ||
-    url.includes('40off') ||
-    url.includes('100%50')
-  );
+  return url.includes('jackpot');
 }
 
 /**
@@ -271,22 +261,9 @@ const LS_KEY_EMAIL_HISTORY = 'wheel_email_history';
 const LS_KEY_RUT_HISTORY = 'wheel_rut_history';
 const LS_KEY_WON_SECTOR = 'wheel_won_sector';
 const LS_KEY_ALL_WINNERS = 'wheel_all_winners';
-const LS_KEY_CUSTOM_SHEET_URL = 'wheel_custom_sheets_url';
-
 /** Obtiene la URL de Google Sheets guardada o configurada */
 export function getGoogleSheetsUrl(): string {
-  try {
-    const custom = localStorage.getItem(LS_KEY_CUSTOM_SHEET_URL);
-    if (custom && custom.trim()) return custom.trim();
-  } catch {}
   return GOOGLE_SHEETS_API_URL;
-}
-
-/** Permite guardar una URL de Google Sheets directamente desde el panel admin */
-export function saveGoogleSheetsUrl(url: string): void {
-  try {
-    localStorage.setItem(LS_KEY_CUSTOM_SHEET_URL, url.trim());
-  } catch {}
 }
 
 /** Obtiene el sector ganado guardado (si giró pero no completó formulario) */
@@ -336,8 +313,7 @@ export function hasParticipated(): boolean {
       typeof window !== 'undefined' &&
       (window.location.search.includes('reset') ||
         window.location.search.includes('test') ||
-        window.location.search.includes('50') ||
-        window.location.hash.includes('50'))
+        isDemoMode())
     ) {
       return false;
     }
@@ -356,24 +332,6 @@ export function getStoredUser(): WheelUser | null {
   } catch {
     return null;
   }
-}
-
-/** Obtiene la lista completa de todos los ganadores registrados localmente */
-export function getLocalWinnersList(): WheelUser[] {
-  try {
-    const raw = localStorage.getItem(LS_KEY_ALL_WINNERS);
-    if (!raw) return [];
-    return JSON.parse(raw) as WheelUser[];
-  } catch {
-    return [];
-  }
-}
-
-/** Guarda o actualiza la lista local de ganadores */
-export function saveLocalWinnersList(winners: WheelUser[]): void {
-  try {
-    localStorage.setItem(LS_KEY_ALL_WINNERS, JSON.stringify(winners));
-  } catch {}
 }
 
 /** Guarda la participación definitiva tras registrarse */
@@ -407,18 +365,6 @@ export function saveParticipation(user: WheelUser): void {
       rutHistory.push(rutClean);
       localStorage.setItem(LS_KEY_RUT_HISTORY, JSON.stringify(rutHistory));
     }
-
-    // Guardar en la lista global de ganadores
-    const currentList = getLocalWinnersList();
-    const existingIndex = currentList.findIndex(
-      w => (rutClean && cleanRut(w.rut) === rutClean) || w.email.toLowerCase() === cleanEmail
-    );
-    if (existingIndex >= 0) {
-      currentList[existingIndex] = { ...currentList[existingIndex], ...user };
-    } else {
-      currentList.unshift(user);
-    }
-    saveLocalWinnersList(currentList);
   } catch (err) {
     console.error('[Wheel] Error guardando participación:', err);
   }
@@ -427,13 +373,14 @@ export function saveParticipation(user: WheelUser): void {
 /** Verifica si un email ya fue usado en participaciones previas */
 export function isEmailUsed(email: string): boolean {
   try {
-    // En entorno de desarrollo o pruebas (?reset, ?test, localhost), NO bloquear
+    // En entorno de desarrollo o pruebas (?reset, ?test, ?jackpot, localhost), NO bloquear
     if (
       typeof window !== 'undefined' &&
       (window.location.hostname === 'localhost' ||
         window.location.hostname === '127.0.0.1' ||
         window.location.search.includes('reset') ||
-        window.location.search.includes('test'))
+        window.location.search.includes('test') ||
+        isDemoMode())
     ) {
       return false;
     }
@@ -466,7 +413,8 @@ export function isRutUsed(rut: string): boolean {
       (window.location.hostname === 'localhost' ||
         window.location.hostname === '127.0.0.1' ||
         window.location.search.includes('reset') ||
-        window.location.search.includes('test'))
+        window.location.search.includes('test') ||
+        isDemoMode())
     ) {
       return false;
     }
