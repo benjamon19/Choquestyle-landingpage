@@ -30,6 +30,13 @@ export interface WheelUser {
 }
 
 /**
+ * Control global de activación de la ruleta en la web normal (choquestyle.cl).
+ * - false: Desactivada temporalmente en la web normal (solo visible con ?jackpot)
+ * - true: Activada para todos los visitantes
+ */
+export const IS_WHEEL_ENABLED_GLOBALLY: boolean = false;
+
+/**
  * URL de la Google Sheets Web App (Apps Script desplegado).
  * Puede configurarse aquí directamente o mediante VITE_GOOGLE_SHEETS_URL en .env.
  */
