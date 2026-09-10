@@ -53,11 +53,11 @@ export const GOOGLE_SHEETS_API_URL: string =
  *   - 40% OFF: AMARILLO (#FFD600) con texto negro
  *   - 5%, 10%, 20%, 30%: Tonos calibrados de gris con alternancia de contraste
  * 
- * Probabilidades:
- *   - 5% OFF:  95%
+ * Probabilidades calibradas:
+ *   - 5% OFF:  94.5%
  *   - 10% OFF: 2.5%
- *   - 20% OFF: 0.1%
- *   - 30% OFF: 0.01%
+ *   - 20% OFF: 2.0% (1 de cada 50 personas)
+ *   - 30% OFF: 1.0% (1 de cada 100 personas)
  *   - 40% OFF: 0% (visual, imposible ganar)
  *   - 50% OFF: 0% (visual, imposible ganar)
  */
@@ -67,7 +67,7 @@ export const WHEEL_SECTORS: WheelSector[] = [
     value: 5,
     color: '#141414',
     textColor: '#FFD600',
-    weight: 95.0,
+    weight: 94.5,
   },
   {
     label: '50% OFF',
@@ -95,14 +95,14 @@ export const WHEEL_SECTORS: WheelSector[] = [
     value: 20,
     color: '#181818',
     textColor: '#FFD600',
-    weight: 0.1,
+    weight: 2.0, // 1 de cada 50 giros (2.0%)
   },
   {
     label: '30% OFF',
     value: 30,
     color: '#2e2e33',
     textColor: '#FFFFFF',
-    weight: 0.01,
+    weight: 1.0, // 1 de cada 100 giros (1.0%)
   },
 ];
 

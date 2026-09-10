@@ -681,33 +681,41 @@ export default function DiscountWheelModal() {
                 </div>
               </div>
 
-              {/* Botón GIRAR — Mantiene el espacio reservado (h-[58px]) para que la ruleta NUNCA se mueva hacia abajo */}
-              <div className="dw-spin-btn pt-2 w-full max-w-[440px] h-[58px] flex items-center justify-center">
-                <button
-                  onClick={handleSpin}
-                  onTouchStart={() => unlockAudio()}
-                  onMouseDown={() => unlockAudio()}
-                  disabled={isSpinning || hasSpun}
-                  className={`group relative overflow-hidden bg-[#FFD600] text-black font-extrabold uppercase h-[50px] px-6 transition-all duration-700 ease-out hover:shadow-[0_0_50px_rgba(255,214,0,0.45)] disabled:cursor-not-allowed cursor-pointer w-full text-center flex items-center justify-center ${hasSpun && !isSpinning
-                    ? 'opacity-0 scale-95 pointer-events-none'
-                    : 'opacity-100 scale-100'
-                    }`}
-                  style={{ fontFamily: 'var(--font-heading)', letterSpacing: '0.14em', fontSize: '0.92rem' }}
-                >
-                  <span className="relative z-10 flex items-center justify-center gap-2 whitespace-nowrap">
-                    {isSpinning ? (
-                      <>
-                        <span className="inline-block w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
-                        GIRANDO LA RULETA...
-                      </>
-                    ) : (
-                      '¡GIRAR RULETA AHORA!'
+              {/* Botón GIRAR — Mantiene el espacio reservado para que la ruleta NUNCA se mueva hacia abajo */}
+              <div className="dw-spin-btn pt-2 w-full max-w-[440px] flex flex-col items-center justify-center">
+                <div className="w-full h-[58px] flex items-center justify-center">
+                  <button
+                    onClick={handleSpin}
+                    onTouchStart={() => unlockAudio()}
+                    onMouseDown={() => unlockAudio()}
+                    disabled={isSpinning || hasSpun}
+                    className={`group relative overflow-hidden bg-[#FFD600] text-black font-extrabold uppercase h-[50px] px-6 transition-all duration-700 ease-out hover:shadow-[0_0_50px_rgba(255,214,0,0.45)] disabled:cursor-not-allowed cursor-pointer w-full text-center flex items-center justify-center ${hasSpun && !isSpinning
+                      ? 'opacity-0 scale-95 pointer-events-none'
+                      : 'opacity-100 scale-100'
+                      }`}
+                    style={{ fontFamily: 'var(--font-heading)', letterSpacing: '0.14em', fontSize: '0.92rem' }}
+                  >
+                    <span className="relative z-10 flex items-center justify-center gap-2 whitespace-nowrap">
+                      {isSpinning ? (
+                        <>
+                          <span className="inline-block w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                          GIRANDO LA RULETA...
+                        </>
+                      ) : (
+                        '¡GIRAR RULETA AHORA!'
+                      )}
+                    </span>
+                    {!isSpinning && (
+                      <span className="absolute inset-0 bg-white -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out" />
                     )}
-                  </span>
-                  {!isSpinning && (
-                    <span className="absolute inset-0 bg-white -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out" />
-                  )}
-                </button>
+                  </button>
+                </div>
+                <p
+                  className="text-gray-400 text-[11px] sm:text-xs tracking-wide mt-2 text-center"
+                  style={{ fontFamily: 'var(--font-body)' }}
+                >
+                  * Válido exclusivamente para alumnos nuevos. Aplica sobre el plan mensual contratado.
+                </p>
               </div>
             </div>
           )}
@@ -754,6 +762,12 @@ export default function DiscountWheelModal() {
                         style={{ fontFamily: 'var(--font-body)' }}
                       >
                         Ingresa tus datos para registrar tu descuento:
+                      </p>
+                      <p
+                        className="text-gray-400 text-[11px] sm:text-xs pt-0.5"
+                        style={{ fontFamily: 'var(--font-body)' }}
+                      >
+                        * Válido exclusivamente para alumnos nuevos. Aplica sobre el plan mensual contratado.
                       </p>
                     </div>
 
@@ -915,12 +929,18 @@ export default function DiscountWheelModal() {
                     </div>
 
                     {/* Mensaje de instrucciones */}
-                    <div className="bg-[#0d0d0d] border-l-2 border-[#FFD600] px-5 py-5 sm:py-6 text-left">
+                    <div className="bg-[#0d0d0d] border-l-2 border-[#FFD600] px-5 py-5 sm:py-6 text-left space-y-2">
                       <p
                         className="text-xs sm:text-sm text-gray-200 leading-relaxed"
                         style={{ fontFamily: 'var(--font-body)' }}
                       >
                         <strong className="text-[#FFD600]">¡Felicidades!</strong> Tómale una captura de pantalla a este cupón o menciona tu RUT (<strong className="text-[#FFD600] font-mono">{savedUser.rut}</strong>) al momento de inscribirte para hacer válido tu descuento.
+                      </p>
+                      <p
+                        className="text-[11px] sm:text-xs text-gray-400 leading-normal border-t border-white/10 pt-2"
+                        style={{ fontFamily: 'var(--font-body)' }}
+                      >
+                        * Beneficio válido exclusivamente para alumnos nuevos. Aplica sobre el plan mensual contratado.
                       </p>
                     </div>
 
