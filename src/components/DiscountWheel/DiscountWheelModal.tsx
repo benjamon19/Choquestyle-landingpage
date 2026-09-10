@@ -19,7 +19,9 @@ import {
   resetWheelStorage,
   submitWinnerToCloud,
   playTickSound,
+  unlockAudio,
   triggerConfetti,
+  isDemoMode,
   WheelSector,
   WheelUser,
 } from './wheelConfig';
@@ -62,13 +64,24 @@ export default function DiscountWheelModal() {
   // INICIALIZACIÓN — Leer localStorage al montar y auto-apertura
   // ─────────────────────────────────────────────────────────────
   useEffect(() => {
-    // Si la URL tiene ?reset, ?test o modo grabación de 50%, limpiar todo el storage para pruebas libres
+    // En modo demostración/grabación de video (?jackpot50, etc.): SIEMPRE reiniciar y abrir ruleta limpia
+    if (isDemoMode()) {
+      resetWheelStorage();
+      setParticipated(false);
+      setSavedUser(null);
+      setHasSpun(false);
+      setWonSector(null);
+      setCurrentView('wheel');
+      const timer = setTimeout(() => {
+        setIsOpen(true);
+      }, 400);
+      return () => clearTimeout(timer);
+    }
+
+    // Si la URL tiene ?reset o ?test, limpiar todo el storage para pruebas libres
     if (
       typeof window !== 'undefined' &&
-      (window.location.search.includes('reset') ||
-        window.location.search.includes('test') ||
-        window.location.search.includes('50') ||
-        window.location.hash.includes('50'))
+      (window.location.search.includes('reset') || window.location.search.includes('test'))
     ) {
       resetWheelStorage();
     }
@@ -292,6 +305,9 @@ export default function DiscountWheelModal() {
   // 1. GIRO DE LA RULETA
   // ─────────────────────────────────────────────────────────────
   const handleSpin = () => {
+    // Desbloquear audio síncronamente en iOS Safari / iPhone y Android
+    unlockAudio();
+
     if (isSpinning || hasSpun || !wheelDivRef.current) return;
 
     setIsSpinning(true);
@@ -669,6 +685,8 @@ export default function DiscountWheelModal() {
               <div className="dw-spin-btn pt-2 w-full max-w-[440px] h-[58px] flex items-center justify-center">
                 <button
                   onClick={handleSpin}
+                  onTouchStart={() => unlockAudio()}
+                  onMouseDown={() => unlockAudio()}
                   disabled={isSpinning || hasSpun}
                   className={`group relative overflow-hidden bg-[#FFD600] text-black font-extrabold uppercase h-[50px] px-6 transition-all duration-700 ease-out hover:shadow-[0_0_50px_rgba(255,214,0,0.45)] disabled:cursor-not-allowed cursor-pointer w-full text-center flex items-center justify-center ${hasSpun && !isSpinning
                     ? 'opacity-0 scale-95 pointer-events-none'

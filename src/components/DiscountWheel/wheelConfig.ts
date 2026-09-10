@@ -107,25 +107,48 @@ export const SECTOR_ANGLE = 360 / TOTAL_SECTORS; // 60°
 // ─────────────────────────────────────────────────────────────
 
 /**
+/**
+ * Detecta si la URL está en modo demostración/grabación de video.
+ * Ej: ?jackpot50, ?prueba50, ?win50, ?demo50, ?jackpot40, etc.
+ */
+export function isDemoMode(): boolean {
+  if (typeof window === 'undefined') return false;
+  const url = (window.location.search + window.location.hash).toLowerCase();
+  return (
+    url.includes('jackpot') ||
+    url.includes('prueba') ||
+    url.includes('demo') ||
+    url.includes('win50') ||
+    url.includes('win40') ||
+    url.includes('50off') ||
+    url.includes('40off') ||
+    url.includes('100%50')
+  );
+}
+
+/**
  * Selecciona el índice del sector ganador mediante pesos ponderados acumulados.
  * Los sectores con weight = 0 NUNCA serán elegidos.
  */
 export function pickWinningSectorIndex(): number {
   // MODO ESPECIAL DE GRABACIÓN DE VIDEO:
-  // Si la URL contiene 'prueba50', 'jackpot50', 'win50', 'demo50' o '50off', cae 100% garantizado en 50% OFF
-  if (typeof window !== 'undefined') {
+  // Cae en 50% OFF o 40% OFF según la URL o 50/50 de probabilidad
+  if (isDemoMode()) {
     const url = (window.location.search + window.location.hash).toLowerCase();
-    if (
-      url.includes('prueba50') ||
-      url.includes('jackpot50') ||
-      url.includes('win50') ||
-      url.includes('demo50') ||
-      url.includes('50off') ||
-      url.includes('100%50')
-    ) {
-      const idx50 = WHEEL_SECTORS.findIndex(s => s.value === 50);
-      if (idx50 !== -1) return idx50;
+    const idx50 = WHEEL_SECTORS.findIndex(s => s.value === 50);
+    const idx40 = WHEEL_SECTORS.findIndex(s => s.value === 40);
+
+    // Si pide explícitamente solo 40 (ej: ?jackpot40 o ?40off)
+    if (url.includes('40') && !url.includes('50')) {
+      return idx40 !== -1 ? idx40 : 0;
     }
+
+    // Si está en jackpot50 o demo: 50% de probabilidad para 50% OFF y 50% de probabilidad para 40% OFF
+    if (idx50 !== -1 && idx40 !== -1) {
+      return Math.random() < 0.5 ? idx50 : idx40;
+    }
+
+    return idx50 !== -1 ? idx50 : 0;
   }
 
   const eligible = WHEEL_SECTORS
@@ -355,6 +378,11 @@ export function saveLocalWinnersList(winners: WheelUser[]): void {
 
 /** Guarda la participación definitiva tras registrarse */
 export function saveParticipation(user: WheelUser): void {
+  // EN MODO DEMO / VIDEO: No bloquear participaciones futuras para permitir pruebas ilimitadas
+  if (isDemoMode()) {
+    return;
+  }
+
   try {
     localStorage.setItem(LS_KEY_PARTICIPATED, 'true');
     localStorage.setItem(LS_KEY_USER, JSON.stringify(user));
@@ -473,6 +501,12 @@ export function isRutUsed(rut: string): boolean {
  * Incluye fallback automático a localStorage sin bloquear la UI.
  */
 export async function submitWinnerToCloud(user: WheelUser): Promise<boolean> {
+  // EN MODO DEMO / VIDEO: NO GUARDAR NADA EN GOOGLE SHEETS
+  if (isDemoMode()) {
+    console.info('[Wheel] Modo Demo activo: No se envía a Google Sheets para mantener limpia la hoja.');
+    return true;
+  }
+
   const url = getGoogleSheetsUrl();
   if (!url) {
     console.info('[Wheel] Google Sheets URL no configurada aún; guardado solo localmente.');
@@ -507,31 +541,71 @@ export async function submitWinnerToCloud(user: WheelUser): Promise<boolean> {
 
 
 // ─────────────────────────────────────────────────────────────
-// SONIDO Y EFECTOS
+// SONIDO Y EFECTOS — COMPATIBILIDAD TOTAL CON IPHONE (IOS) Y MÓVILES
 // ─────────────────────────────────────────────────────────────
 
-/** Tick mecánico via Web Audio API (sin archivos externos) */
+let sharedAudioCtx: AudioContext | null = null;
+
+function getSharedAudioContext(): AudioContext | null {
+  if (typeof window === 'undefined') return null;
+  if (!sharedAudioCtx) {
+    const AudioCtxClass =
+      window.AudioContext ||
+      (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    if (AudioCtxClass) {
+      try {
+        sharedAudioCtx = new AudioCtxClass();
+      } catch {}
+    }
+  }
+  return sharedAudioCtx;
+}
+
+/**
+ * Desbloquea síncronamente el motor de audio en iOS / Safari y Android.
+ * Debe ser invocado en el evento de toque o click del usuario.
+ */
+export function unlockAudio(): void {
+  try {
+    const ctx = getSharedAudioContext();
+    if (!ctx) return;
+    if (ctx.state === 'suspended') {
+      ctx.resume();
+    }
+    // Micro-buffer de silencio inmediato para activar el hardware de audio en iOS
+    const buffer = ctx.createBuffer(1, 1, 22050);
+    const source = ctx.createBufferSource();
+    source.buffer = buffer;
+    source.connect(ctx.destination);
+    source.start(0);
+  } catch {}
+}
+
+/** Tick mecánico reutilizando el contexto activo para iPhone y móviles */
 export function playTickSound(): void {
   try {
-    const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-    if (!AudioCtx) return;
+    const ctx = getSharedAudioContext();
+    if (!ctx) return;
 
-    const ctx = new AudioCtx();
+    if (ctx.state === 'suspended') {
+      ctx.resume();
+    }
+
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
 
     osc.type = 'triangle';
-    osc.frequency.setValueAtTime(360, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.03);
+    osc.frequency.setValueAtTime(380, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(130, ctx.currentTime + 0.035);
 
-    gain.gain.setValueAtTime(0.1, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.03);
+    gain.gain.setValueAtTime(0.22, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.035);
 
     osc.connect(gain);
     gain.connect(ctx.destination);
 
     osc.start();
-    osc.stop(ctx.currentTime + 0.035);
+    osc.stop(ctx.currentTime + 0.04);
   } catch {
     // Falla silenciosamente si el navegador bloquea audio
   }
