@@ -6,6 +6,7 @@ import Lenis from '@studio-freight/lenis'
 import NavigationBar from './components/Navbar/NavigationBar'
 import HeroBanner from './sections/HeroSection/HeroBanner'
 import FooterBar from './components/Footer/FooterBar'
+import DiscountWheel from './components/DiscountWheel'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
@@ -70,6 +71,7 @@ export default function App() {
         </Suspense>
       </main>
       <FooterBar />
+      <DiscountWheel />
     </div>
   )
 }
